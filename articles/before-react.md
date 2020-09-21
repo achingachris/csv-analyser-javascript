@@ -15,7 +15,7 @@ Since React is a JavaScript library, it is essential to understand the basic and
 
 1. JavaScript
 2. Arrow Functions
-3. Classes (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+3. Classes 
 4. ES6 Features
 
 ### JavaScript
@@ -36,3 +36,22 @@ function() {
     //code block
 }
 ```
+
+An Arrow function would look like:
+
+```javascript
+() => {
+    //code block
+}
+```
+
+To learn more on Arrow functions; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+### Classes
+
+JavaScript classes are more like special function
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+
+### ES6 Features
+
