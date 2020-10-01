@@ -43,3 +43,5 @@ yarn start
 The browser will open and run on localhost:3000
 
 Success!! We just started developing in React.
+
+To get on track, check the [first commit](https://github.com/ChrisAchinga/react.ing/tree/6ea6e1e5c9ce863567933804a9eaf1b6681dd9d1)
