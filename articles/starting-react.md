@@ -16,12 +16,30 @@ https://create-react-app.dev/
 
 1. Starting the Project
 
-```
-npx create-react-app company --use-npm
-```
-
 Syntax:
 
 ```
 npx create-react-app {project-name} {--use-npm (to use npm, default is yarn) }
 ```
+
+Let's give our little project a cute name "DevC20"
+
+So to start the project, start your terminal/cmd and execute the command below:
+
+```shell
+npx create-react-app devc20
+```
+
+Once the installation is complete, move into the workfolder i.e `cd devc20`. Open the folder using a browser and get ready to type some letters!.
+
+React has a really simple files structure:
+
+Well we need to know that everything is working, so on the current work space, open the terminal and run the local server.
+
+```
+yarn start
+```
+
+The browser will open and run on localhost:3000
+
+Success!! We just started developing in React.
