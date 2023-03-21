@@ -8,15 +8,21 @@
 </head>
 <body>
   <div class="container">
+    <!-- Site Header -->
     <div class="container">
       <h1 class="my-4 text-center">Upload CSV File</h1>
     </div>
+
+    <!-- Upload File -->
     <form action="/upload" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
-        <input type="file" name="csvfile" accept=".csv" required class="form-control-file">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Please Select a CSV file to Upload</label>
+        <input type="file" name="csvfile" accept=".csv" required class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary">Upload</button>
+      <button type="submit" class="btn btn-outline-success">Upload File</button>
     </form>
+
+
     <h2 class="my-4">File Summary</h2>
     <table id="file-summary" class="table table-bordered table-hover">
       <tr>
