@@ -8,33 +8,33 @@ export default function Home() {
   const [previousFiles, setPreviousFiles] = useState([])
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-  
+    event.preventDefault()
+    const formData = new FormData(event.target)
+
     try {
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
-      });
-  
-      const data = await response.json();
-  
-      setFileSummary(data.fileSummary);
-      setColumnData(data.columnData);
+      })
+
+      const data = await response.json()
+
+      setFileSummary(data.fileSummary)
+      setColumnData(data.columnData)
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error('Error uploading file:', error)
     }
-  };
+  }
 
   const fetchPreviousFiles = async () => {
     try {
-      const response = await fetch('/api/previous');
-      const data = await response.json();
-      setPreviousFiles(data);
+      const response = await fetch('/api/previous')
+      const data = await response.json()
+      setPreviousFiles(data)
     } catch (error) {
-      console.error('Error fetching previous files:', error);
+      console.error('Error fetching previous files:', error)
     }
-  };
+  }
 
   return (
     <>
