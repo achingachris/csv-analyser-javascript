@@ -29,6 +29,6 @@ cd csv-file-analyzer
 
 `node app.js`
 
-5. Open a web browser and visit `http://localhost:3000`.
+5. Open a web browser and visit `http://localhost:8000`.
 
 
