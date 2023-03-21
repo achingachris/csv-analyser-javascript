@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>CSV File Analyzer</title>
+</head>
+<body>
+  <div class="container">
+    <div class="container">
+      <h1 class="my-4 text-center">Upload CSV File</h1>
+    </div>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="file" name="csvfile" accept=".csv" required class="form-control-file">
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    <h2 class="my-4">File Summary</h2>
+    <table id="file-summary" class="table table-bordered table-hover">
+      <tr>
+        <th>File Name</th>
+        <th>File Size</th>
+      </tr>
+    </table>
+    <h2 class="my-4">Column Data</h2>
+    <table id="column-data" class="table table-bordered table-hover">
+      <tr>
+        <th>Column Name</th>
+        <th>Data Type</th>
+      </tr>
+    </table>
+    <h2 class="my-4">Previously Analyzed CSV Files</h2>
+    <table id="previous-files" class="table table-bordered table-hover">
+      <tr>
+        <th>File Name</th>
+        <th>File Size</th>
+        <th>Last Analyzed</th>
+        <th>Actions</th>
+      </tr>
+    </table>
+  </div>
+  <script>
+    document.querySelector('form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData
+      });
+
+      const data = await response.json();
+
+      const fileSizeInMB = (data.fileSummary.fileSize / (1024 * 1024)).toFixed(2);
+
+      const fileSummaryTable = document.getElementById('file-summary');
+      const fileSummaryRow = fileSummaryTable.insertRow(-1);
+      fileSummaryRow.insertCell(-1).textContent = data.fileSummary.fileName;
+      fileSummaryRow.insertCell(-1).textContent = fileSizeInMB + ' MB';
+
+      const columnDataTable = document.getElementById('column-data');
+      for (const [columnName, dataType] of Object.entries(data.columnData)) {
+        const row = columnDataTable.insertRow(-1);
+        row.insertCell(-1).textContent = columnName;
+        row.insertCell(-1).textContent = dataType;
+      }
+    });
+
+    (async function fetchPreviousFiles() {
+      const response = await fetch('/previous');
+      const files = await response.json();
+
+      const previousFilesTable = document.getElementById('previous-files');
+      for (const [index, file] of files.entries()) {
+        const row = previousFilesTable.insertRow(-1);
+        row.insertCell(-1).textContent = file.fileSummary.fileName;
+        row.insertCell(-1).textContent = (file.fileSummary.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+        row.insertCell(-1).textContent = new Date(file.fileSummary.lastAnalyzed).toLocaleString();
+
+        const actionsCell = row.insertCell(-1);
+        const viewButton = document.createElement('button');
+        viewButton.textContent = 'View';
+        viewButton.className = 'btn btn-sm btn-info';
+        viewButton.onclick = () => displayFileDetails(file);
+        actionsCell.appendChild(viewButton);
+      }
+    })();
+
+    function displayFileDetails(file) {
+      const fileSummaryTable = document.getElementById('file-summary');
+      fileSummaryTable.deleteRow(-1);
+      const fileSummaryRow = fileSummaryTable.insertRow(-1);
+      fileSummaryRow.insertCell(-1).textContent = file.fileSummary.fileName;
+      fileSummaryRow.insertCell(-1).textContent = (file.fileSummary.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+
+      const columnDataTable = document.getElementById('column-data');
+      while (columnDataTable.rows.length > 1) {
+        columnDataTable.deleteRow(-1);
+      }
+      for (const [columnName, dataType] of Object.entries(file.columnData)) {
+        const row = columnDataTable.insertRow(-1);
+        row.insertCell(-1).textContent = columnName;
+        row.insertCell(-1).textContent = dataType;
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html
+
